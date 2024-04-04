@@ -108,6 +108,7 @@ public class FriendRecommender {
   }
 
 
+
   /* makeRecommendations
    * Given two users, u and f, and an ArrayList of Strings, al, this method
    * will recommend new friends for u based on the friends of f. The
