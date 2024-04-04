@@ -76,62 +76,6 @@ class UserTest {
     assertEquals(w, User.find(friendNames[2]), "find returned the wrong user for w");
   }
 
-  // Test friending a user adds them to both users' adj
-  @Test
-  void testFriend() {
-    User u = new User(friendNames[0]);
-    User v = new User(friendNames[1]);
-    User w = u.friend(friendNames[1]);
-    assertEquals(1, u.adj.size(), "u's adj has the wrong size");
-    assertEquals(1, v.adj.size(), "v's adj has the wrong size");
-    assertEquals(v, u.adj.get(friendNames[1]), "u's adj has the wrong user");
-    assertEquals(u, v.adj.get(friendNames[0]), "v's adj has the wrong user");
-    assertEquals(v, w, "friend returned the wrong user");
-  }
-
-  // Test friending a user twice does not add them twice
-  @Test
-  void testFriendTwice() {
-    User u = new User(friendNames[0]);
-    User v = new User(friendNames[1]);
-    User w = u.friend(friendNames[1]);
-    User x = u.friend(friendNames[1]);
-    assertEquals(1, u.adj.size(), "u's adj has the wrong size");
-    assertEquals(1, v.adj.size(), "v's adj has the wrong size");
-    assertEquals(v, u.adj.get(friendNames[1]), "u's adj has the wrong user");
-    assertEquals(u, v.adj.get(friendNames[0]), "v's adj has the wrong user");
-    assertEquals(v, w, "friend returned the wrong user");
-    assertEquals(v, x, "friend returned the wrong user");
-  }
-
-  // Test unfriending a user removes them from both users' adj
-  @Test
-  void testUnfriend() {
-    User u = new User(friendNames[0]);
-    User v = new User(friendNames[1]);
-    u.friend(friendNames[1]);
-    User w = u.unfriend(friendNames[1]);
-    assertEquals(0, u.adj.size(), "u's adj has the wrong size");
-    assertEquals(0, v.adj.size(), "v's adj has the wrong size");
-    assertEquals(null, u.adj.get(friendNames[1]), "u's adj has the wrong user");
-    assertEquals(null, v.adj.get(friendNames[0]), "v's adj has the wrong user");
-    assertEquals(v, w, "unfriend returned the wrong user");
-  }
-
-  // Test unfriending a user in the opposite order
-  @Test
-  void testUnfriendOpposite() {
-    User u = new User(friendNames[0]);
-    User v = new User(friendNames[1]);
-    u.friend(friendNames[1]);
-    User w = v.unfriend(friendNames[0]);
-    assertEquals(0, u.adj.size(), "u's adj has the wrong size");
-    assertEquals(0, v.adj.size(), "v's adj has the wrong size");
-    assertEquals(null, u.adj.get(friendNames[1]), "u's adj has the wrong user");
-    assertEquals(null, v.adj.get(friendNames[0]), "v's adj has the wrong user");
-    assertEquals(u, w, "unfriend returned the wrong user");
-  }
-
   // Test a single user leaving removes them from the HashMap
   @Test
   void testLeaveSingle() {
@@ -147,32 +91,16 @@ class UserTest {
    */
   @Test
   void testLeaveFriend() {
+    FriendMaker friendMaker = new FriendMaker();
     User u = new User(friendNames[0]);
     User v = new User(friendNames[1]);
-    u.friend(friendNames[1]);
+    friendMaker.friend(u,friendNames[1]);
     u.leave();
     assertEquals(0, v.adj.size(), "v's adj has the wrong size");
     assertFalse(v.adj.containsKey(friendNames[0]), "v's adj has the wrong user");
     assertEquals(1, User.users.size(), "Incorrect size");
     assertEquals(null, User.users.get(friendNames[0]), "User not removed from HashMap");
     assertEquals(v, User.users.get(friendNames[1]), "User v not in HashMap");
-  }
-
-  // Test isFriend returns true when the users are friends
-  @Test
-  void testIsFriendTrue() {
-    User u = new User(friendNames[0]);
-    User v = new User(friendNames[1]);
-    u.friend(friendNames[1]);
-    assertTrue(u.isFriend(v), "isFriend returned false");
-  }
-
-  // Test isFriend returns false when the users are not friends
-  @Test
-  void testIsFriendFalse() {
-    User u = new User(friendNames[0]);
-    User v = new User(friendNames[1]);
-    assertFalse(u.isFriend(v), "isFriend returned true");
   }
 
 }

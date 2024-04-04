@@ -43,31 +43,6 @@ public class User {
     return users.get(nm);
   }
 
-  /* friend
-   * Given a String, f, this method will friend the user with that name. The
-   * method returns the User that was friended. Friending adds the friendship to
-   * adj and to the other user's adj. Friending a user that is already a friend
-   * does not change the friendship.
-   *
-   */
-  public User friend( String f ) {
-    User u = users.get( f );
-    adj.put( u.name, u );
-    u.adj.put( name, this );
-    return u;
-  }
-
-  /* unfriend
-   * Given a String, f, this method will unfriend the user with that name. The
-   * method returns the User that was unfriended. Unfriending removes the
-   * friendship from adj and from the other user's adj.
-   */
-  public User unfriend( String f ) {
-    User u = users.get( f );
-    adj.remove( u.name );
-    u.adj.remove( this.name );
-    return u;
-  }
 
   /* leave
    * This method removes the user from the social network. It removes the user
@@ -81,11 +56,46 @@ public class User {
     }
   }
 
-  /* isFriend
-   * Given a User, u, this method returns true if u is a friend of this user and
-   * false otherwise.
-   */
-  public boolean isFriend( User u ) {
-    return adj.containsKey( u.name );
+
+
+  /*
+1. Support one way follows relationship
+    + follows relationship
+		+ can follow and unfollow
+		+ friends relationship replaces follow
+		+ follow is ignored if the user's are already friends
+		+ suggest both new possible friends and users to follow
+ */
+
+  public void followUser(User u){
+
   }
+
+  public void unfollowUser(User u){
+
+  }
+
 }
+
+
+
+/*
+2. Relationship changes
+    + when Alice and Bob become friends
+			+ suggest Alice's friends that are not Bob's friends as new friends for Bob
+			+ suggest Bob's friends that are not Alice's friends as new friends for Alice
+			+ suggest Alice's followed users that are not Bob's followed users or friends as new followed users for Bob
+			+ suggest Bob's followed users that are not Alice's followed users as new followed users for Alice
+		+ when Alice follows Bob
+			+ suggest Alice's friends that do not follow Bob to follow Bob
+ */
+
+/*
+3. Handle improper input
+    + output line with an error
+		+ too many tokens
+		+ too few tokens
+		+ relationship types other than friend or follow
+		+ same user twice
+
+ */

@@ -17,7 +17,9 @@ public class FriendRecommender {
    * output is printed to the standard output.
    */
   public static void main( String [] args ) {
-    ArrayList<String> output = new FriendRecommender().compute( new Scanner( System.in ) );
+    FriendMaker friendMaker = new FriendMaker();
+    ArrayList<String> output = new FriendRecommender().compute(friendMaker, new Scanner( System.in ) );
+
     for( String s : output ) {
       System.out.println( s );
     }
@@ -29,7 +31,7 @@ public class FriendRecommender {
    * and makes friend recommendations based on the input. The method returns an
    * ArrayList of Strings that contains the friend recommendations.
    */
-  public ArrayList<String> compute( Scanner input ) {
+  public ArrayList<String> compute(FriendMaker friendMaker , Scanner input ) {
     ArrayList<String> list = new ArrayList<String>();
 
     for(String s = input.nextLine(); !s.equals( "end" ); s = input.nextLine()) {
@@ -48,11 +50,11 @@ public class FriendRecommender {
           break;
         case "friends":
           assert( u != null );
-          recommend( u, u.friend( line.next() ), list );
+          recommend( u, friendMaker.friend(u, line.next() ), list,friendMaker );
           break;
         case "unfriends":
           assert( u != null );
-          u.unfriend( line.next() );
+          friendMaker.unfriend(u, line.next() );
           break;
         default:
           System.out.println( "Unknown user action" );
@@ -69,10 +71,10 @@ public class FriendRecommender {
    * A comes before B in sorted order. The method does not return anything so
    * the output is passed back in al.
    */
-  public void recommend( User u, User f, ArrayList<String> al ) {
+  public void recommend( User u, User f, ArrayList<String> al ,FriendMaker friendMaker) {
     ArrayList<String> tmp = new ArrayList<String>();
-    makeRecommendations( u, f, tmp );
-    makeRecommendations( f, u, tmp);
+    makeRecommendations( u, f, tmp,friendMaker );
+    makeRecommendations( f, u, tmp,friendMaker);
     Collections.sort( tmp );
     String prev = null;
     for( String s : tmp ) {
@@ -92,9 +94,9 @@ public class FriendRecommender {
    * A comes before B in sorted order. The method does not return anything so
    * the output is passed back in al.
    */
-  public void makeRecommendations( User u, User f, ArrayList<String> al ) {
+  public void makeRecommendations( User u, User f, ArrayList<String> al,FriendMaker friendMaker ) {
     for( User v : f.adj.values() ) {
-      if( (u != v) && !u.isFriend( v ) ) {
+      if( (u != v) && !friendMaker.isFriend( u,v ) ) {
         if( v.name.compareTo( u.name ) < 0 ) {
           al.add( v.name + " and " + u.name + " should be friends" );
         } else {
