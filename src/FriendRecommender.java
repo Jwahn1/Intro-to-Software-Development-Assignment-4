@@ -50,7 +50,10 @@ public class FriendRecommender {
           break;
         case "friends":
           assert( u != null );
-          recommend( u, friendMaker.friend(u, line.next() ), list,friendMaker );
+          String friended = line.next();
+          recommend( u, friendMaker.friend(u, friended), list,friendMaker );
+          recommendFriendFollow( User.users.get(friended), u, list,friendMaker );
+          recommendFriendFollow(u, User.users.get(friended), list,friendMaker);
           break;
         case "unfriends":
           assert( u != null );
@@ -92,10 +95,31 @@ public class FriendRecommender {
       }
     }
   }
+
+  //used when a user u follows user f
   public void recommendFollow( User u, User f, ArrayList<String> al ,FriendMaker friendMaker) {
     ArrayList<String> tmp = new ArrayList<String>();
-    makeRecommendationsFollow( u, f, tmp,friendMaker );
-    makeRecommendationsFollow( f, u, tmp,friendMaker);
+   //following somone you friend should be ignored
+    if(!friendMaker.isFriend(u,f)){
+      makeRecommendationsFollow( u, f, tmp,friendMaker );
+    }
+
+
+    Collections.sort( tmp );
+    String prev = null;
+    for( String s : tmp ) {
+      if( !s.equals( prev ) ) {
+        al.add( s );
+        prev = s;
+      }
+    }
+  }
+
+  //used when a user u friends another user f and f follows other users
+  public void recommendFriendFollow( User u, User f, ArrayList<String> al ,FriendMaker friendMaker) {
+    ArrayList<String> tmp = new ArrayList<String>();
+    makeRecommendationsFriendFollow( u, f, tmp,friendMaker );
+
     Collections.sort( tmp );
     String prev = null;
     for( String s : tmp ) {
@@ -118,7 +142,7 @@ public class FriendRecommender {
    */
   public void makeRecommendations( User u, User f, ArrayList<String> al,FriendMaker friendMaker ) {
     for( User v : f.adj.values() ) {
-      if( (u != v) && !friendMaker.isFriend( u,v ) ) {
+      if( (u != v) && !friendMaker.isFriend( u,v ) &&!friendMaker.isFollowed(f,v) ) {
         if( v.name.compareTo( u.name ) < 0 ) {
           al.add( v.name + " and " + u.name + " should be friends" );
         } else {
@@ -128,15 +152,22 @@ public class FriendRecommender {
     }
   }
 
-  // after user u follows another user v, the function will recommend  to all of user u's friends to follow user v
+  // after user u follows another user f, the function will recommend  to all of user u's friends to follow user f
   public void makeRecommendationsFollow( User u, User f, ArrayList<String> al,FriendMaker friendMaker ) {
+    for( User v : u.adj.values() ) {
+      if( (f != v) && !friendMaker.isFollowed( v,f ) ) {
+        al.add( v.name + " should follow " + f.name  );
+      }
+    }
+  }
+
+  /* after user u friends another user f, the function will recommend  all of the user's f follows to user u, so u can
+  follow them.
+  */
+  public void makeRecommendationsFriendFollow( User u, User f, ArrayList<String> al,FriendMaker friendMaker ) {
     for( User v : f.adj.values() ) {
-      if( (u != v) && !friendMaker.isFriend( u,v ) ) {
-        if( v.name.compareTo( u.name ) < 0 ) {
-          al.add( v.name + " should follow " + u.name  );
-        } else {
-          al.add( u.name + " should follow " + v.name  );
-        }
+      if( (u != v) && friendMaker.isFollowed( u,v ) ) {
+        al.add( u.name + " should follow " + v.name  );
       }
     }
   }

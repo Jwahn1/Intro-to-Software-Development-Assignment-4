@@ -97,4 +97,35 @@ class FriendRecommenderTest {
     assertEquals( 0, al.size(), "Wrong recommendation count" );
   }
 
+  /*
+  When a user makes a new friend, their followed users should be suggested as users
+  to follow for the new friend. If Bob follows Alice and Bob becomes friends with Carol
+  then a suggestion should be “Carol should follow Alice”. Similarly, any users that Carol
+  follows and Bob does not follow should be suggested as new users for Bob to follow.
+   */
+  @Test
+  void testRecommendFollowToFriends() {
+    FriendMaker friendMaker = new FriendMaker();
+    User u = new User( friendNames[0] );
+    User f = new User( friendNames[1] );
+    User g = new User( friendNames[2] );
+    User h = new User( friendNames[3] );
+
+
+    friendMaker.follow(u, h.name);
+    friendMaker.friend(f, u.name );
+
+    FriendRecommender fr = new FriendRecommender();
+    ArrayList<String> al = new ArrayList<String>();
+    fr.makeRecommendations( f, u, al,friendMaker );
+    assertEquals( 0, al.size(), "Wrong recommendation count" );
+  }
+
+  /*
+  When a user follows a user, their friends networks should be suggested to follow that
+  user. For example, if Alice is already friends with Bob and then Bob follows Carol then
+  a suggestion should be “Alice should follow Carol”
+   */
+
+
 }

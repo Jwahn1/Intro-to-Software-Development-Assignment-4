@@ -64,6 +64,9 @@ public class FriendMaker {
         return u;
     }
 
-
+    //function returns true when user u is in user v's adj but not vice versa
+    public boolean isFollowed( User v,User u ) {
+        return ((v.adj.containsKey( u.name )) && !(u.adj.containsKey(v.name)));
+    }
 
 }
