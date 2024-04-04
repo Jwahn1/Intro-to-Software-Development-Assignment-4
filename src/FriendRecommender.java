@@ -166,7 +166,7 @@ public class FriendRecommender {
   */
   public void makeRecommendationsFriendFollow( User u, User f, ArrayList<String> al,FriendMaker friendMaker ) {
     for( User v : f.adj.values() ) {
-      if( (u != v) && friendMaker.isFollowed( u,v ) ) {
+      if( (u != v) && friendMaker.isFollowed( f,v ) ) {
         al.add( u.name + " should follow " + v.name  );
       }
     }

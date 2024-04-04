@@ -104,7 +104,7 @@ class FriendRecommenderTest {
   follows and Bob does not follow should be suggested as new users for Bob to follow.
    */
   @Test
-  void testRecommendFollowToFriends() {
+  void testRecommendFollowsToNewFriend() {
     FriendMaker friendMaker = new FriendMaker();
     User u = new User( friendNames[0] );
     User f = new User( friendNames[1] );
@@ -113,12 +113,13 @@ class FriendRecommenderTest {
 
 
     friendMaker.follow(u, h.name);
+    friendMaker.follow(u, g.name);
     friendMaker.friend(f, u.name );
 
     FriendRecommender fr = new FriendRecommender();
     ArrayList<String> al = new ArrayList<String>();
-    fr.makeRecommendations( f, u, al,friendMaker );
-    assertEquals( 0, al.size(), "Wrong recommendation count" );
+    fr.makeRecommendationsFriendFollow( f, u, al,friendMaker );
+    assertEquals( 2, al.size(), "Wrong recommendation count" );
   }
 
   /*
@@ -126,6 +127,25 @@ class FriendRecommenderTest {
   user. For example, if Alice is already friends with Bob and then Bob follows Carol then
   a suggestion should be “Alice should follow Carol”
    */
+  @Test
+  void testRecommendFollowToFriends() {
+    FriendMaker friendMaker = new FriendMaker();
+    User u = new User( friendNames[0] );
+    User f = new User( friendNames[1] );
+    User g = new User( friendNames[2] );
+    User h = new User( friendNames[3] );
 
+
+
+
+    friendMaker.friend(u, f.name );
+    friendMaker.friend(u, g.name );
+    friendMaker.follow(u, h.name );
+
+    FriendRecommender fr = new FriendRecommender();
+    ArrayList<String> al = new ArrayList<String>();
+    fr.makeRecommendationsFollow( u, h, al,friendMaker );
+    assertEquals( 2, al.size(), "Wrong recommendation count" );
+  }
 
 }
