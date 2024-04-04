@@ -20,11 +20,13 @@ Refactoring 0:
 	Fix: refactor relationship functions (i.e friending a user and associated functions) into their own classes.
 
 Refactoring 1:
-  Location:
-	SOLID principle:
-	class implementation or class interface:
-	Cause:
-
+  Location:User.java
+	SOLID principle: Open/Closed principle
+	class implementation or class interface: Class interface
+	Cause: Friend status are directly tied to the structure of User objects (hash maps) meaning to add more types of
+	relationships between users as specified we would need to changed how users store other user information
+    Fix: add an abstract over User which can handle data management instead of it being managed by both User.java and
+    FriendMaker.java
 CLASS-LEVEL REFACTORING SUGGESTED BUT NOT IMPLEMENTED
 
 Refactoring 2:
