@@ -58,7 +58,7 @@ public class FriendRecommender {
           break;
         case "follows":
           assert(u != null);
-          friendMaker.follow(u, line.next());
+          recommendFollow( u, friendMaker.follow(u, line.next()), list,friendMaker );
           break;
         case "unfollows":
           assert(u != null);
@@ -93,6 +93,20 @@ public class FriendRecommender {
     }
   }
 
+  public void recommendFollow( User u, User f, ArrayList<String> al ,FriendMaker friendMaker) {
+    ArrayList<String> tmp = new ArrayList<String>();
+    makeRecommendationsFollow( u, f, tmp,friendMaker );
+    makeRecommendationsFollow( f, u, tmp,friendMaker);
+    Collections.sort( tmp );
+    String prev = null;
+    for( String s : tmp ) {
+      if( !s.equals( prev ) ) {
+        al.add( s );
+        prev = s;
+      }
+    }
+  }
+
 
   /* makeRecommendations
    * Given two users, u and f, and an ArrayList of Strings, al, this method
@@ -113,5 +127,18 @@ public class FriendRecommender {
       }  
     }
   }
+
+  public void makeRecommendationsFollow( User u, User f, ArrayList<String> al,FriendMaker friendMaker ) {
+    for( User v : f.adj.values() ) {
+      if( (u != v) && !friendMaker.isFriend( u,v ) ) {
+        if( v.name.compareTo( u.name ) < 0 ) {
+          al.add( v.name + " should follow " + u.name  );
+        } else {
+          al.add( u.name + " should follow " + v.name  );
+        }
+      }
+    }
+  }
+
 
 }
