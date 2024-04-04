@@ -1,11 +1,11 @@
-1. Support one way follows relationship
+1. Support one way follows relationship-DONE
     + follows relationship
 		+ can follow and unfollow -------DONE
 		+ friends relationship replaces follow -------DONE
 		+ follow is ignored if the user's are already friends -------DONE
 		+ suggest both new possible friends and users to follow ------DONE
 
-2. Relationship changes
+2. Relationship changes ---DONE
     + when Alice and Bob become friends
 			+ suggest Alice's friends that are not Bob's friends as new friends for Bob ---DONE
 			+ suggest Bob's friends that are not Alice's friends as new friends for Alice ---DONE
