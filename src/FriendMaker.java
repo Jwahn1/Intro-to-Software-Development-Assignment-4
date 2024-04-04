@@ -39,5 +39,29 @@ public class FriendMaker {
         return v.adj.containsKey( u.name );
     }
 
+    /* follow
+     * Given a String, f, this method will follow the user with that name. The
+     * method returns the User that was followed. following adds the friendship to
+     * adj .
+     *
+     */
+    public User follow(User v, String f){
+        User u = User.users.get( f );
+        v.adj.put( u.name, u );
+        return u;
+    }
+
+    /* unfollow
+     * Given a String, f, this method will unfollow the user with that name. The
+     * method returns the User that was unfollowed. unfollowed removes the
+     * friendship from adj.
+     */
+    public User unfollow(User v, String f){
+        User u = User.users.get( f );
+        v.adj.remove( u.name );
+        return u;
+    }
+
+
 
 }

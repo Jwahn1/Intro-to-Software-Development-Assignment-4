@@ -129,4 +129,18 @@ public class FriendMakerTest {
         assertEquals(false,friendMaker.isFriend(u,v),"v is in u's adj");
 
     }
+
+    //test a user following and then unfriending the user should return with both adj being empty
+    @Test
+    void testFollowUnfriend(){
+        FriendMaker friendMaker = new FriendMaker();
+        User u = new User(friendNames[0]);
+        User v = new User(friendNames[1]);
+        friendMaker.follow(u,v.name);
+        friendMaker.unfriend(u,v.name);
+        assertEquals(0,u.adj.size(),"u's adj has the wrong size");
+        assertEquals(0,v.adj.size(),"v's adj has the wrong size");
+        assertEquals(false ,friendMaker.isFriend(u,v),"v is  in u's adj");
+        assertEquals(false,friendMaker.isFriend(v,u),"u is  in v's adj");
+    }
 }
