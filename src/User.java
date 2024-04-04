@@ -56,6 +56,8 @@ public class User {
     }
   }
 
+}
+
 
 
   /*
@@ -66,17 +68,6 @@ public class User {
 		+ follow is ignored if the user's are already friends
 		+ suggest both new possible friends and users to follow
  */
-
-  public void followUser(User u){
-
-  }
-
-  public void unfollowUser(User u){
-
-  }
-
-}
-
 
 
 /*

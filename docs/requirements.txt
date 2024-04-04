@@ -1,8 +1,8 @@
 1. Support one way follows relationship
     + follows relationship
-		+ can follow and unfollow
-		+ friends relationship replaces follow 
-		+ follow is ignored if the user's are already friends
+		+ can follow and unfollow -------DONE
+		+ friends relationship replaces follow -------DONE
+		+ follow is ignored if the user's are already friends -------DONE
 		+ suggest both new possible friends and users to follow
 
 2. Relationship changes

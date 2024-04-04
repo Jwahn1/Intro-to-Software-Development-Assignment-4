@@ -12,7 +12,7 @@ For each refactoring opportunity , please provide the following information:
 CLASS-LEVEL REFACTORING IMPLEMENTED
 
 Refactoring 0:
-  Location:
+  Location: User.java
 	SOLID principle: Single Responsibility Principle
 	class implementation or class interface: User.java
 	Cause: User handles relationships between user, this violates the Single Responsibility Principle principal as
@@ -28,11 +28,11 @@ Refactoring 1:
 CLASS-LEVEL REFACTORING SUGGESTED BUT NOT IMPLEMENTED
 
 Refactoring 2:
-  Location:
-	SOLID principle:
-	class implementation or class interface:
-	Cause:
-	Fix:
+  Location: FriendMaker.java
+	SOLID principle:Single Responsibility Principle
+	class implementation or class interface: implement Abstract relationshipMaker class and followerMaker Class
+	Cause: FriendMaker has two responsibilities: handling friend functions and follow functions
+	Fix: adding and abstract super class for both the friend functions and the follow functions
 
 Refactoring 3:
   Location:

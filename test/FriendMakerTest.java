@@ -74,4 +74,59 @@ public class FriendMakerTest {
         assertEquals(null, User.users.get(friendNames[0]), "User not removed from HashMap");
         assertEquals(v, User.users.get(friendNames[1]), "User v not in HashMap");
     }
+
+    //test a user following another user
+    @Test
+    void testFollow(){
+        FriendMaker friendMaker = new FriendMaker();
+        User u = new User(friendNames[0]);
+        User v = new User(friendNames[1]);
+        friendMaker.follow(u,v.name);
+        assertEquals(1,u.adj.size(),"u's adj has the wrong size");
+        assertEquals(0,v.adj.size(),"v's adj has the wrong size");
+        assertEquals(true,friendMaker.isFriend(u,v),"v is not in u's adj");
+        assertEquals(false,friendMaker.isFriend(v,u),"u is  in v's adj");
+    }
+
+    //test following a user twice, this shouldn't change the status of adj
+    @Test
+    void testFollowTwice(){
+        FriendMaker friendMaker = new FriendMaker();
+        User u = new User(friendNames[0]);
+        User v = new User(friendNames[1]);
+        friendMaker.follow(u,v.name);
+        friendMaker.follow(u,v.name);
+        assertEquals(1,u.adj.size(),"u's adj has the wrong size");
+        assertEquals(0,v.adj.size(),"v's adj has the wrong size");
+        assertEquals(true,friendMaker.isFriend(u,v),"v is not in u's adj");
+        assertEquals(false,friendMaker.isFriend(v,u),"u is  in v's adj");
+    }
+
+    //test following a user and then friending them, this shouldn't change the status of  u's adj
+    @Test
+    void testFollowFriend(){
+        FriendMaker friendMaker = new FriendMaker();
+        User u = new User(friendNames[0]);
+        User v = new User(friendNames[1]);
+        friendMaker.follow(u,v.name);
+        friendMaker.friend(u,v.name);
+        assertEquals(1,u.adj.size(),"u's adj has the wrong size");
+        assertEquals(1,v.adj.size(),"v's adj has the wrong size");
+        assertEquals(true,friendMaker.isFriend(u,v),"v is not in u's adj");
+        assertEquals(true,friendMaker.isFriend(v,u),"u is not in v's adj");
+    }
+
+    //test a user following another user and then unfollowing
+    @Test
+    void testUnfollow(){
+        FriendMaker friendMaker = new FriendMaker();
+        User u = new User(friendNames[0]);
+        User v = new User(friendNames[1]);
+        friendMaker.follow(u,v.name);
+        friendMaker.unfollow(u,v.name);
+        assertEquals(0,u.adj.size(),"u's adj has the wrong size");
+        assertEquals(0,v.adj.size(),"v's adj has the wrong size");
+        assertEquals(false,friendMaker.isFriend(u,v),"v is in u's adj");
+
+    }
 }
