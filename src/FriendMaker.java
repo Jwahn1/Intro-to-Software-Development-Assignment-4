@@ -26,8 +26,10 @@ public class FriendMaker {
     //refactor: added User v as User.java uses this class
     public  User unfriend( User v,String f ) {
         User u = User.users.get( f );
-        v.adj.remove( u.name );
-        u.adj.remove( v.name );
+        if(v.adj.containsKey(u.name) ){
+            v.adj.remove( u.name );
+            u.adj.remove( v.name );
+        }
         return u;
     }
 
