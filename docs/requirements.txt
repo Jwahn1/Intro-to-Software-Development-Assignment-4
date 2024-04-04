@@ -20,7 +20,7 @@
 		+ relationship types other than friend or follow
 		+ same user twice
 
-4. Add Unit tests for any new classes
+4. Add Unit tests for any new classes -----DONE
 
 Bonus:  
     Learn about Factory pattern
