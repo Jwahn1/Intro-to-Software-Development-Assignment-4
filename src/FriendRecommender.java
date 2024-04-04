@@ -92,7 +92,6 @@ public class FriendRecommender {
       }
     }
   }
-
   public void recommendFollow( User u, User f, ArrayList<String> al ,FriendMaker friendMaker) {
     ArrayList<String> tmp = new ArrayList<String>();
     makeRecommendationsFollow( u, f, tmp,friendMaker );
@@ -129,6 +128,7 @@ public class FriendRecommender {
     }
   }
 
+  // after user u follows another user v, the function will recommend  to all of user u's friends to follow user v
   public void makeRecommendationsFollow( User u, User f, ArrayList<String> al,FriendMaker friendMaker ) {
     for( User v : f.adj.values() ) {
       if( (u != v) && !friendMaker.isFriend( u,v ) ) {

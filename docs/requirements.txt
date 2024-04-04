@@ -12,7 +12,7 @@
 			+ suggest Alice's followed users that are not Bob's followed users or friends as new followed users for Bob
 			+ suggest Bob's followed users that are not Alice's followed users as new followed users for Alice
 		+ when Alice follows Bob
-			+ suggest Alice's friends that do not follow Bob to follow Bob
+			+ suggest Alice's friends that do not follow Bob to follow Bob -------DONE
 3. Handle improper input
     + output line with an error
 		+ too many tokens
