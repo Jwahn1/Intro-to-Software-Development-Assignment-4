@@ -13,11 +13,11 @@ CLASS-LEVEL REFACTORING IMPLEMENTED
 
 Refactoring 0:
   Location:
-	SOLID principle: Open/Close
+	SOLID principle: Single Responsibility Principle
 	class implementation or class interface: User.java
-	Cause: User handles relationships between user, this violates the open/closed principal as we want to add
-	more types in the future.
-	Fix: refactor relationship functions (i.e friending a user and associated functions) into their own classes
+	Cause: User handles relationships between user, this violates the Single Responsibility Principle principal as
+	User is handling both User creation and storage, and managing the relationship functions between the Users
+	Fix: refactor relationship functions (i.e friending a user and associated functions) into their own classes.
 
 Refactoring 1:
   Location:
