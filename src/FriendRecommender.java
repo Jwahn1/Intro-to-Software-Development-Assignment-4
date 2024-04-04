@@ -56,6 +56,14 @@ public class FriendRecommender {
           assert( u != null );
           friendMaker.unfriend(u, line.next() );
           break;
+        case "follows":
+          assert(u != null);
+          friendMaker.follow(u, line.next());
+          break;
+        case "unfollows":
+          assert(u != null);
+          friendMaker.unfollow(u, line.next());
+          break;
         default:
           System.out.println( "Unknown user action" );
       }
